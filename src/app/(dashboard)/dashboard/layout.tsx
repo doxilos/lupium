@@ -24,6 +24,8 @@ const Layout = async ({ children }: Props) => {
       <div className="text-xs font-semibold leading-6 text-gray-400">Your Chats</div>
     </div>
     {children}
+  {/* 2:30
+  */}
   </div>)
 }
 
