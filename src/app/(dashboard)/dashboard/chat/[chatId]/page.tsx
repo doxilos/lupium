@@ -51,5 +51,3 @@ const page = async ({ params }: Props) => {
 }
 
 export default page
-
-// TODO 4.27
