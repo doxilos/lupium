@@ -34,7 +34,7 @@ const Messages: FunctionComponent<Props> = ({ chatId, initialMessages, sessionId
 
     return () => {
       pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`))
-      pusherClient.unbind("chat:${chatId}", messageHandler)
+      pusherClient.unbind("incoming-message", messageHandler)
     }
   }, [chatId])
 

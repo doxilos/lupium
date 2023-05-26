@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     }
 
     // Pusher
-    pusherServer.trigger(
+    await pusherServer.trigger(
       toPusherKey(`user:${idToAdd}:incoming_friend_requests`),
       "incoming_friend_requests",
       {
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     )
 
     // Valid request
-    db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
+    await db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
 
     return new Response("OK")
   } catch (error) {
