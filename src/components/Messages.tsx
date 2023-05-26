@@ -36,7 +36,7 @@ const Messages: FunctionComponent<Props> = ({ chatId, initialMessages, sessionId
       pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`))
       pusherClient.unbind("chat:${chatId}", messageHandler)
     }
-  }, [])
+  }, [chatId])
 
   const formatTimestamp = (timestamp: number) => {
     return format(timestamp, "HH:mm")
