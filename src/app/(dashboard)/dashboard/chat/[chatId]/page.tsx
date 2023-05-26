@@ -51,10 +51,10 @@ const page = async ({ params }: Props) => {
   const initialMessages = await getChatMessages(chatId)
 
   return <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]">
-    <div className="flex sm:items-center justify-between py-3 border-b-2 bg-gray-200">
+    <div className="flex sm:items-center justify-between py-3 border-b-2 bg-white">
       <div className="relative flex items-center space-x-4">
         <div className="relative">
-          <div className="relative w-8 sm:w-12 h-8 sm:h-12">
+          <div className="relative w-8 sm:w-12 h-8 sm:h-12 mx-4">
             <Image fill referrerPolicy="no-referrer" src={chatPartner.image}
                    alt={`${chatPartner.name} profile picture`} className="rounded-full" />
           </div>
@@ -69,7 +69,7 @@ const page = async ({ params }: Props) => {
       </div>
     </div>
 
-    <Messages initialMessages={initialMessages} sessionId={session.user.id} chatPartner={chatPartner}
+    <Messages chatId={chatId} initialMessages={initialMessages} sessionId={session.user.id} chatPartner={chatPartner}
               sessionImg={session.user.image} />
     <ChatInput chatPartner={chatPartner} chatId={chatId} />
   </div>

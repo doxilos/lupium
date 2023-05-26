@@ -5,13 +5,15 @@ import { z } from "zod"
 
 import { fetchRedis } from "@/helpers/redis"
 import { db } from "@/lib/db"
+import { pusherServer } from "@/lib/pusher"
+import { toPusherKey } from "@/lib/utils"
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
     const { email: emailToAdd } = addFriendValidator.parse(body.email)
 
-    const idToAdd=await fetchRedis("get", `user:email:${emailToAdd}`) as string
+    const idToAdd = await fetchRedis("get", `user:email:${emailToAdd}`) as string
 
     if (!idToAdd) {
       return new Response("This person does not exist.", { status: 400 })
@@ -37,6 +39,16 @@ export async function POST(req: Request) {
     if (isAlreadyFriends) {
       return new Response("Already friends.", { status: 400 })
     }
+
+    // Pusher
+    pusherServer.trigger(
+      toPusherKey(`user:${idToAdd}:incoming_friend_requests`),
+      "incoming_friend_requests",
+      {
+        senderId: session.user.id,
+        senderEmail: session.user.email
+      }
+    )
 
     // Valid request
     db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
